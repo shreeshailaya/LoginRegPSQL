@@ -34,17 +34,17 @@ def register(request):
 
 def login(request):
     if request.method == "POST":
-        username = request.POST['uname']
-        password = request.POST['psw']
+        username = request.POST['username']
+        password = request.POST['password']
 
         print(username)
 
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            return render(request, 'register.html')
+            return render(request, 'index.html')
 
-    return render(request, 'base.html')
+    return render(request, 'login.html')
 
 
 def logout(request):
