@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User, auth
+from .models import UserProfile
 
 
 def register(request):
@@ -10,6 +11,7 @@ def register(request):
         username = request.POST['username']
         password = request.POST['password']
         password1 = request.POST['password1']
+        avatar = request.POST['avatar']
 
         if password == password1:
             if User.objects.filter(username=username).exists():
@@ -21,7 +23,10 @@ def register(request):
 
                 user = User.objects.create_user(username=username, password=password1, email=email,
                                                 first_name=first_name, last_name=last_name)
+                avatar = UserProfile.objects.create(user=user, avatar=avatar)
                 user.save()
+                avatar.save()
+
                 print('usr registered ')
                 return render(request, 'index.html')
         else:
@@ -43,6 +48,8 @@ def login(request):
         if user is not None:
             auth.login(request, user)
             return render(request, 'index.html')
+        else:
+            return render(request, 'login.html', {'note': 'Enter Valid Credentials'})
 
     return render(request, 'login.html')
 
@@ -50,3 +57,12 @@ def login(request):
 def logout(request):
     auth.logout(request)
     return render(request, 'index.html')
+
+
+def profile(request):
+    if request.user.is_authenticated:
+        data = request.user
+        data_ava = UserProfile.objects.filter(user=data)
+        return render(request, 'profile.html', {'data': data_ava, 'data1': data})
+    else:
+        return render(request, 'login.html')

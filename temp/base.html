@@ -23,7 +23,7 @@
 
     {% if user.is_authenticated %}
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="{% url 'index' %}" style="width:auto;"><span class="glyphicon glyphicon-user"></span> {{user.username}} </a></li>
+          <li><a href="{% url 'profile' %}" style="width:auto;"><span class="glyphicon glyphicon-user"></span> {{user.username}} </a></li>
 
           <li><a href="{% url 'logout' %}" style="width:auto;"><span class="glyphicon glyphicon-log-in"></span> logout  </a></li>
     </ul>

@@ -1,4 +1,5 @@
 {% include 'base.html' %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,6 +35,15 @@
 </style>
 </head>
 <body>
+{% if user.is_authenticated %}
+
+<p>
+    You are already log in
+</p>
+{% else %}
+<h3 style="color:red">
+<center>{{note}}</center>
+</h3>
 <div class="login-form">
     <form method="post">
                   {% csrf_token %}
@@ -53,7 +63,12 @@
             <a href="#" class="pull-right">Forgot Password?</a>
         </div>
     </form>
-    <p class="text-center"><a href="#">Create an Account</a></p>
+    <p class="text-center"><a href="{% url 'register' %}">Create an Account</a></p>
+
 </div>
+
+
+
 </body>
+{% endif %}
 </html>
